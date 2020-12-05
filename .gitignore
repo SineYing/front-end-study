@@ -351,4 +351,4 @@ MigrationBackup/
 
 
 .DS_Store
-.history
+.history/
