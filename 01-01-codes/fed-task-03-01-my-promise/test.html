@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Promise 测试</title>
+    </head>
+    <body>
+        <script>
+            var promise = new Promise((resolve,reject)=>{
+                resolve(100)
+            })
+            let promise1 = promise.then((value)=>{
+                console.log(value)
+                // return promise1
+            })
+            promise1.then(()=>{
+
+            },(reason)=>{
+                console.log(reason.message)
+            }) 
+        </script>
+    </body>
+</html>

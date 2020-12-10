@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            // getSalary(12000,2000)
+            // getSalary(15000,3000)
+            // getSalary(15000,4000)
+
+            function makeSalary(base){
+                return function(performance){
+                    return base +performance
+                }
+
+            }
+
+            let salary1 = makeSalary(12000)
+            let salary2 = makeSalary(15000)
+
+            console.log(salary1(3000))
+            console.log(salary2(4000))
+        </script>
+    </body>
+</html>

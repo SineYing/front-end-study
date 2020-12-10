@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+            function makePower(power){
+                return function(num){
+                    return Math.pow(num,power)
+                }
+            }
+
+            //求平方
+            let pow2=makePower(2)
+            let pow3=makePower(3)
+
+            console.log(pow2(4))
+            console.log(pow2(5))
+            console.log(pow3(4))
+        </script>
+    </body>
+</html>

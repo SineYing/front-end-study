@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Promise finally</title>
+    </head>
+    <body>
+        <script>
+/*
+1.无论当前这个promise对象的最终状态是成功的还是失败，finally中的回调函数始终会被执行一次
+
+2.finally方法的后面可以链式调用then方法拿到当前这个promise最终的返回结果
+
+3.finally不是一个静态属性，要被定义到原型对象身上
+*/
+            function p1(){
+                return new Promise((resolve,reject)=>{
+                    resolve('p1')
+                })
+            }
+            
+            p1().finally(()=>{
+                console.log('finally')
+            }).then(value=>console.log(value))
+
+        </script>
+    </body>
+</html>
