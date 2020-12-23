@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>闭包陷阱</title>
+    </head>
+    <body>
+        <button id="btn1">add</button>
+        <script>
+        function foo(){
+            /*
+             * 1.跨作用于引用
+             * 2.突破作用域的限制用到另外一个作用域的数据
+             * 
+             * 当前内存是泄漏的，因为除了Dom中的引用代码中还存在el的引用，所以GC并不会将el进行回收
+             */
+            var el = document.getElementById('btn1')
+            el.onclick=function(){
+                console.log(el.id)
+            }
+        }
+        foo()
+
+        function foo(){
+            var el = document.getElementById('btn1')
+            el.onclick=function(){
+                console.log(el.id)
+            }
+            // 解决内存的泄漏
+            el=null
+        }
+    </script>
+    </body>
+</html>
