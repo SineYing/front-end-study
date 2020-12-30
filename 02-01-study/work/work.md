@@ -39,6 +39,8 @@
 - 在项目目录下添加temp文件夹放入项目模板，模板里在相应的地方用<%= XXX %>添加询问内容
 - 通过fs读取文件,并通过ejs模板引擎将通过inquirer拿到询问结果输出到目标目录
 
+项目地址为：https://github.com/SineYing/front-end-study/tree/main/02-01-study/work/scoffoldWork
+
 2、尝试使用 Gulp 完成项目的自动化构建
 
 项目基础代码下载地址：
@@ -53,3 +55,8 @@
 - 2. 提交一个项目说明文档，要求思路流程清晰。
 
 说明文档和代码统一提交至作业仓库
+
+答：
+
+项目地址为：https://github.com/SineYing/front-end-study/tree/main/02-01-study/work/pages-boilerplate
+说明文档地址：https://github.com/SineYing/front-end-study/blob/main/02-01-study/work/pages-boilerplate/infomation.md
