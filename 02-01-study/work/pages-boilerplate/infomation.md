@@ -13,6 +13,7 @@
 - 监视变化及构建变化
 - useref文件引用处理
 - 文件压缩
+- 代码检测功能添加
 - 重新规划构建过程
 - 清理暴露的内容
 
@@ -381,6 +382,43 @@ const useref = () => {
 }
 ```
 
+### 代码检测功能添加
+
+添加代码检测插件
+
+```js
+yarn add gulp-eslint --dev
+```
+
+创建任务
+
+```js
+const lint = () => {
+    return src(['src/assets/scripts/*.js'])
+    .pipe(plugins.eslint(({
+		rules: {
+			'my-custom-rule': 1,
+			'strict': 2
+		},
+		globals: [
+			'jQuery',
+			'$'
+		],
+		envs: [
+			'browser'
+		]
+	})))
+    // format（）将lint结果输出到控制台。
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.eslint.formatEach('compact', process.stderr));
+}
+module.exports = {
+    lint,
+}
+```
+
+
+
 ### 重新规划构建过程
 
 首先要将build秤称重会产生中间产物的任务生成路径改为中间产物文件夹temp
@@ -451,14 +489,18 @@ const build = series(
 /*
 现有的任务有style/script/js/img/font/extra/compile/build/useref/serve/clean
 用户常使用是开发模式和发布模式
+按照pakage.json中的script内容输出以下内容
 */
 module.exports = {
     clean,
+    serve,
     build,
-    develop,
+    start,
+    compile,
+    lint,
 }
 ```
 
 
 
-进入控制台执行npm run clean/build/develops就可以了
+进入控制台执行npm run 相应的命令就可以了

@@ -29,6 +29,7 @@
     "serve": "gulp serve",
     "build": "gulp build",
     "start": "gulp start",
+    "compile": "gulp compile",
     "deploy": "gulp deploy --production"
   },
   "browserslist": [
@@ -50,6 +51,7 @@
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
+    "gulp-eslint": "^6.0.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",

@@ -154,9 +154,32 @@ const build = series(
 /**
  * 开发模式下
  */
-const develop = series(compile, serve)
+const start = series(compile, serve)
+
+const lint = () => {
+    return src(['src/assets/scripts/*.js'])
+    .pipe(plugins.eslint(({
+		rules: {
+			'my-custom-rule': 1,
+			'strict': 2
+		},
+		globals: [
+			'jQuery',
+			'$'
+		],
+		envs: [
+			'browser'
+		]
+	})))
+    // format（）将lint结果输出到控制台。
+    .pipe(plugins.eslint.format())
+    .pipe(plugins.eslint.formatEach('compact', process.stderr));
+}
 module.exports = {
     clean,
+    serve,
     build,
-    develop,
+    start,
+    compile,
+    lint,
 }
