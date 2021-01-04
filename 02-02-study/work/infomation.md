@@ -348,8 +348,6 @@ module.exports = {
 };
 ```
 
-## 模块合并
-
 ## eslint添加及配置
 
 安装eslint
