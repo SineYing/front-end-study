@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES Module - 模块的特性</title>
+</head>
+<body>
+    <!-- 通过给script添加type = module属性，就可以以ES Module的标准执行其中的js代码了 -->
+    <script type="module">
+        console.log("this is a module")
+    </script>
+    <!-- 1.ESM自动采用严格模式忽略’use strict‘ -->
+    <script type="module">
+        /**
+         *  严格模式中不能在全局范围直接使用this
+         * 非严格模式下this指向的是全局对象
+        */
+        console.log(this)
+    </script>
+    <!-- 2.每个ESM都是作用在单独的私有作用域当中 -->
+    <script type="module">
+        var foo= '123'
+        console.log(foo)
+    </script>
+    <script type="module">
+        // console.log(foo)
+    </script>
+    <!-- 3. ESM是通过CORS的方式请求外部js模块的
+        这就要求我们请求我们的模块不在同源地址的话，
+        要求请求的js模块的响应头当中提供有效的cors标头
+
+        cors不支持文件的形式访问，所以必须使用http server 的方式去让页面工作起来
+     -->
+     <script type="module" src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+     <!-- 4. ESM的script标签会延迟脚本的执行 
+    相当于defer属性
+    -->
+     <script type="module" src="demo.js"></script>
+     <p>这段文字不会被上面的引入延迟</p>
+</body>
+</html>
