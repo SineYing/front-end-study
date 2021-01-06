@@ -13,7 +13,6 @@
   - 自动清除输出目录
   - 静态文件拷贝
   - 输出文件名Hash
-  - 模块合并
 - 使用Webpack实现 yarn lint
   - eslint
 
@@ -347,8 +346,6 @@ module.exports = {
   ],
 };
 ```
-
-## 模块合并
 
 ## eslint添加及配置
 

@@ -41,29 +41,29 @@ module.exports = {
         }
       },
 
-      // {
-      //   test: /\.html$/,
-      //   use: {
-      //     loader: 'html-loader',
-      //     options: {
-      //       attributes: {
-      //         list: [
-      //           {
-      //             tag: 'img',
-      //             attribute: 'src',
-      //             type: 'src',
-      //           },
-      //           {
-      //             tag: 'a',
-      //             attribute: 'href',
-      //             type: 'src',
-      //           },
-      //         ],
-      //       },
-      //       minimize: true
-      //     }
-      //   }
-      // },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attributes: {
+              list: [
+                {
+                  tag: 'img',
+                  attribute: 'src',
+                  type: 'src',
+                },
+                {
+                  tag: 'a',
+                  attribute: 'href',
+                  type: 'src',
+                },
+              ],
+            },
+            minimize: true
+          }
+        }
+      },
 
     ]
   },
