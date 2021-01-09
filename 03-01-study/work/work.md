@@ -28,7 +28,75 @@ let vm = new Vue({
 > Vue.se的内部原理是调用Object.defineProperty将新增属性转换成getter和setter
 
 ### 2、请简述 Diff 算法的执行过程
- 
+
+答：
+    就是用来找两个节点之间的差异
+
+    虚拟DOM，DOM操作会引起DOM的重拍和重绘，Diff的核心是当数据变化后不直接操作DOM，而是用JS对象来描述真实DOM，当数据变化后先比较JS对象是否发生变化，找出变化后的位置，然后只是最小化的更新变化后的位置，从而提高性能，diff是一种算法。
+
+    - 查找两棵树的每一个节点
+    - 只比较同级别的节点，如果同级别不相同直接删除
+
+    ### 执行过程
+
+    首先对新老数组的开始和结尾设置一个索引，在遍历的过程中移动相应的索引，在对开始和结束节点比较的时候总共有四种情况
+
+    - oldStartVnode/newStartVnode(旧开始节点/新开始节点)
+    - oldEndVnode/newEndVnode(旧结束节点/新结束节点)
+    - oldStartVnode/newEndVnode(旧开始节点/新结束节点)
+    - oldEndVnode/newVnode(旧开始节点/新开始节点)
+
+    开始和结束节点（新开始节点和旧开始节点、新结束节点和旧结束节点）
+
+    - 如果旧开始节点是sameVnode（key和sel相同）
+
+      - 调用patchVnode()对比和更新节点
+
+      - 把旧开始和新开始索引往后移动oldStartIdx++/oldEndIdx++，把后面的节点作为开始节点进行比较
+
+      - 如果新开始节点和旧开始节点不是sameVnode，开始调用patchVnode()比较新结束节点和旧结束节点
+
+      - 如果相同索引往后移动oldStartIdx--/oldEndIdx--，
+
+        > 注意：如果两个节点是sameVnode的话会重用之前的DOM元素，在patchVnode中会对比新旧元素的差异，把差异更新到重用的DOM元素上，这个差异可能是文本内容不同或者子元素不同，这个DOM是不需要重新创建的，如果文本内容或子元素都相同是不会进行DOM操作的，虚拟DOM是通过这种方式提高性能的
+
+    ![新旧开始节点比较](./img/diff.png)
+
+    - 比较旧开始节点和新结束节点
+
+      - 使用sameVnode比较两个节点是否为相同节点，如果相同调用patchVnode()对比和更新节点
+      - 因为oldStartVnode和newEndVnode相同，把oldStartVnode对应的DOM元素，移动到右边，更新索引，旧开始的索引移动到下一个位置，新结束索引往前移动
+
+      ![旧开始节点和新结束节点](./img/diff2.png)
+
+    - 旧开始节点和新结束节点
+
+      - 使用sameVnode比较两个节点是否为相同节点，如果相同调用patchVnode()对比和更新节点
+      - 因为oldEndVnode和newStartVnode相同，把oldEndVnode移动到最前面更新索引
+
+      ![旧开始节点和新结束节点](./img/diff3.png)
+
+    - 非以上四种情况
+
+    > 以上情况都不满足说明开始和结束节点都不相同，这个时候在旧节点中一次查找是否有新节点。首先遍历新的开始节点，在旧的数组中查找是否有相同key值的节点，
+    >
+    > 没有找到说明新的开始节点是一个新的节点，那表明需要创建DOM元素并把它插入到开始的位置
+    >
+    > 如果找到了相同key值的元素，并且sel也相同说明是相同节点，找到的这个旧节点会被赋值到elmTomove这个变量，然后调用patchVnode对比和更新这两个节点内部的差异，然后再把elmToMove节点对应的DOM元素移动到最前面
+
+    ### 循环结束
+
+    - 当老节点的所有子节点先遍历完（oldStarIdx>oldEndIndx），循环结束
+
+      - 说明新节点有剩余，会调用addVnode()把剩余节点批量插入右边，这种情况下旧开始的索引大于旧结束节点的索引
+
+      ![新节点有剩余](./img/diff4.png)
+
+    - 当新节点的所有子节点先遍历完（newStarIdx>newEndIndx），循环结束
+
+      - 说明老节点有剩余，把剩余节点批量删除，这种情况下新开始索引大于新结束索引
+
+      ![老节点有剩余](./img/diff5.png)
 
 ## 二、编程题
 
