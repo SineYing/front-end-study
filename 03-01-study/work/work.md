@@ -318,3 +318,5 @@ class Compiler {
 
 ![work](./img/work.png)
 
+答：
+项目地址为https://github.com/SineYing/front-end-study/tree/main/03-01-study/work/snabbdom-work
