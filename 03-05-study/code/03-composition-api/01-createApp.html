@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            x:{{position.x}}
+            y:{{position.y}}
+        </div>
+        <script type="module">
+        import {createApp,reactive,onMounted,onUnmounted,toRefs} from './node_modules/vue/dist/vue.esm-browser.js'
+        /**
+         * 1.按需导入createApp，创建一个vue对象，可以接收选项作为参数，也就是一个组件的选项。
+         * 跟vue2中给vue构造函数传入的选项一样，可以传入data，methods，computed等选项
+         * 2.传入的data不支持对象的形式，必须返回一个函数，统一了data的写法
+         * 3.createApp返回一个vue对象
+        */
+       function useMousePosition(){
+            const position = reactive({
+                x:0,
+                y:0
+            })
+            const update = e=>{
+                position.x= e.pageX
+                position.y= e.pageY
+            }
+            onMounted(()=>{
+                window.addEventListener('mousemove',update)
+            })
+
+            onUnmounted(()=>{
+                window.removeEventListener('mousemove',update)
+            })
+            return toRefs(position)
+       }
+        const app = createApp({
+            /** 
+             * composition API的入口是setup
+            */
+           setup(){
+               /** 
+                * 1.第一个参数是props，用来接收外部传来的参数，并且是个响应式对象，不能被解构
+                * 2.第二个参数是context，attrs,emit,slots
+                * 3.需要返回一个对象，可以使用在模板、methods、computed，以及生命周期的使用函数中
+                * 4.setup使用的时机是在props解析完毕，组件实例创建之前执行，所以setup中无法获取组件的实例
+                * 所以setup中无法访问组件的data、methods、computed
+                * setup内部的this指向的是undefined
+                * 5.reactive将数据转为响应式对象
+               */
+              const position = useMousePosition()
+              return {
+                position
+              }
+           },
+           mounted() {
+               this.position.x = 100
+           },
+        })
+        /** 
+         * mount方法类似于vue2.0中的$mount,用于把实例挂载到指定位置
+         * app中的成员比vue2中的实例成员要少很多，而且这些成员都没有使用$开头，说明未来基本不用再这个对象上新增成员
+        */
+        app.mount("#app")
+        </script>
+    </body>
+</html>

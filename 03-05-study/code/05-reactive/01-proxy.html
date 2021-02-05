@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+        //     'use strict'
+        //     const target={
+        //         foo:'xxxx',
+        //         bar:'yyyy'
+        //     }
+        // const proxy = new Proxy(target,{
+        //     get(target,key,receiver){
+        //         return Reflect.get(...arguments)
+        //     },
+        //     set(target,key,receiver){
+        //          return Reflect.get(...arguments)
+        //     },
+        //     deleteProperty(target,key){
+        //         return Reflect.get(...arguments)
+        //     },
+        // })
+        // proxy.foo='zzs'
+
+        const obj = {
+            get foo(){
+                console.log(this)
+                return this.bar
+            }
+        }
+        const proxy =new Proxy(obg,{
+            get(target,key,reciver){
+                if(key == 'bar'){
+                    return 'value-bar'
+                }
+                return Reflect.get(target,key)
+            }
+        }
+        )
+        console.log(proxy.foo)
+    </script>
+    </body>
+</html>
